@@ -7,12 +7,7 @@ $(function () {
     button_select.addClass('btn-select-disabled');
     processing_container.html(default_loading_response);
     processing_container.hide();
-    var turndown = new TurndownService();
-    turndown.remove("script");
-    turndown.remove("link");
-    turndown.remove("meta");
-    turndown.remove("style");
-    var markdown;
+    var text;
     var timer = 0;
     var tab_id = 0;
 
@@ -24,13 +19,12 @@ $(function () {
     recognition.start();
 
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        console.log(tabs);
         tab_id = tabs[0].id;
-        chrome.tabs.sendMessage(tab_id, {'command': 'convert'}, parse_html);
+        chrome.tabs.sendMessage(tab_id, {'command': 'convert'}, process_content);
     });
 
-    function parse_html(html) {
-        markdown = turndown.turndown(html).substr(0, 6789);
+    function process_content(content) {
+        text = content.substr(0, 6789);
     }
         
     function ask_question(question_input) {
@@ -44,7 +38,7 @@ $(function () {
         timer = setTimeout(function() {
             $.post('https://responder.thecape.ai/api/0.1/answer?token=hj1-BZfR7IICCXtVHZXeEeiZdfXkVeDjnZnzZ3HcR_o',
                 {
-                    'text': markdown,
+                    'text': text,
                     'question': text_question,
                     'sourceType': 'document',
                     'numberOfItems': 5
@@ -71,7 +65,7 @@ $(function () {
     function show_answer(answer) {
         answer = answers[selected_answer]['answerText'];
         chrome.tts.speak(answer);
-        answer = answer.replace("\n", "").replace("  ", " ");
+        answer = answer.replace("\n", " ").replace("  ", " ");
         chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'text': answer}, function() {});
     }
 

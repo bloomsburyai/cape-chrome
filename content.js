@@ -3,7 +3,7 @@ var capeTopOffset = 250;
 
 chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
     if (msg['command'] == 'convert') {
-        callback(document.querySelector("body").outerHTML);
+        callback(document.querySelector("body").innerText);
     } else if (msg['command'] == 'highlight') {
         text = msg['text'];
 		capeMark.unmark({
