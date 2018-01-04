@@ -3,7 +3,13 @@ var capeTopOffset = 250;
 
 chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
     if (msg['command'] == 'convert') {
-        callback(document.querySelector("body").innerText);
+        // All frames get sent the message so we only respond if we're at the top level
+        if (typeof(parent == 'undefined')) {
+            var text = document.querySelector("body").innerText;
+            if (text.length > 0) {
+                callback(text);
+            }
+        }
     } else if (msg['command'] == 'highlight') {
         text = msg['text'];
 		capeMark.unmark({
