@@ -17,8 +17,8 @@ $(function () {
     recognition.interimResults = true;
     recognition.onstart = function() { $("#speech-input").removeClass("fa-microphone").addClass("fa-microphone-slash"); }
     recognition.onresult = function(ev) {
-        var final_transcript;
-        var interim_transcript;
+        var final_transcript = "";
+        var interim_transcript = "";
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
                final_transcript += event.results[i][0].transcript;
@@ -26,8 +26,6 @@ $(function () {
                interim_transcript += event.results[i][0].transcript;
             }
         }
-        console.log(interim_transcript);
-        console.log(final_transcript);
         $(".question-text").val(final_transcript);
     }
     recognition.onerror = function(error) {
