@@ -1,0 +1,149 @@
+body {
+    min-width: 320px;
+    background: #f1f1f1;
+    min-height: 33px;
+}
+
+.brand-color {
+    color: #ffffff;
+}
+
+.navbar{
+    padding: 1rem;
+}
+
+.navbar-logo {
+    height: 48px;
+}
+
+.navbar-text {
+    color: rgba(255,255,255,0.9) !important;
+    font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.bg-bloomsbury {
+    background-color: #1994D5 !important;
+    /*border-bottom: 2px solid #1574B7;*/
+}
+
+#padded-navbar {
+    margin-bottom: 16px;
+}
+
+#document-text {
+    min-height: 96px;
+    margin-bottom: 24px;
+}
+
+#question-text {
+    float: left;
+}
+
+.icon-btn {
+    opacity: 0.4;
+}
+
+.icon-btn:hover {
+    opacity: 1;
+}
+
+.icon-btn-correct {
+    color: darkgreen;
+}
+
+.icon-btn-wrong {
+    color: darkred;
+}
+
+.icon-btn-correction-submit {
+    color: darkgreen;
+    padding: 4px 0 4px;
+    margin-left: -50px;
+}
+
+.answer-phrase {
+    background-color: rgba(25, 148, 213, 0.2);
+}
+
+.answer-selected {
+    border-bottom: 2px dotted;
+}
+
+#container-ctrlf {
+    position: fixed;
+    width: 320px;
+    top: 0;
+    right: 0;
+    z-index: 99999999;
+    border-top: 0;
+    padding: 4px;
+}
+
+#container-ctrlf input.question-text {
+    font-size: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 4px;
+    padding-right: 32px;
+}
+
+#container-ctrlf input.question-text:focus {
+    outline-width: 1px;
+}
+
+.btn-custom {
+    padding: .2rem 0.5rem !important;
+    border-radius: 0.1em;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-custom:hover {
+    background-color: #ddd;
+}
+
+.btn-select-disabled, .btn-select-disabled:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #999 !important;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+}
+
+.btn-close:hover {
+    background-color: transparent;
+    color: #bf2b1a !important;
+}
+
+.response-holder-container-overlay {
+    vertical-align: sub;
+    margin-left: -32px;
+    margin-right: 12px;
+}
+
+.response-holder-container {
+    display: inline-block;
+    padding-top: 6px;
+    width: 32px;
+}
+
+.response-holder {
+    color: #999;
+    font-size: 0.7em;
+    text-align: right;
+    width: 100%;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+mark {
+    background: yellow;
+    color: black;
+}
