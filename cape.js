@@ -1,6 +1,6 @@
 $(function () {
     var text_question = '';
-    var total_ans = 0;
+    var answers;
     var default_loading_response = '<i class="fa fa-spinner fa-pulse"></i>';
     var processing_container = $('.response-holder');
     var button_select = $('.btn-select ');
@@ -46,19 +46,18 @@ $(function () {
                 {
                     'text': markdown,
                     'question': text_question,
-                    'sourceType': 'document'
+                    'sourceType': 'document',
+                    'numberOfItems': 5
                 }, function (reply) {
-                    total_ans = reply['result']['items'].length;
-                    if (total_ans > 0) {
-                        answer = reply['result']['items'][0]['answerText'];
-                        chrome.tts.speak(answer);
-                        answer = answer.replace("\n", "").replace("  ", " ");
-                        chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'text': answer}, function() {});
+                    answers = reply['result']['items'];
+                    if (answers.length > 0) {
+                        selected_answer = 0;
+                        show_answer(answers[selected_answer]);
                     }
                 })
                 .done(function () {
-                    if (total_ans > 0) {
-                        processing_container.html('1/' + total_ans);
+                    if (answers.length > 0) {
+                        processing_container.html('1/' + answers.length);
                         processing_container.show();
                         button_select.removeClass('btn-select-disabled');
                     } else {
@@ -68,7 +67,14 @@ $(function () {
                 })
         }, 500);
     }
-        
+
+    function show_answer(answer) {
+        answer = answers[selected_answer]['answerText'];
+        chrome.tts.speak(answer);
+        answer = answer.replace("\n", "").replace("  ", " ");
+        chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'text': answer}, function() {});
+    }
+
     $(".question-text").keyup(function() {
         var question_input = $(this);
         ask_question(question_input);
@@ -80,20 +86,22 @@ $(function () {
     });
         
     $(".select-prev").click(function() {
-        selected_ans--;
-        if (selected_ans < 0) {
-            selected_ans = total_ans - 1;
+        selected_answer--;
+        if (selected_answer < 0) {
+            selected_answer = answers.length - 1;
         }
-        processing_container.html((selected_ans + 1) + '/' + total_ans);
+        show_answer(answers[selected_answer]);
+        processing_container.html((selected_answer + 1) + '/' + answers.length);
         processing_container.show();
     });
 
     $(".select-next").click(function() {
-        selected_ans++;
-        if (selected_ans >= total_ans) {
-            selected_ans = 0;
+        selected_answer++;
+        if (selected_answer >= answers.length) {
+            selected_answer = 0;
         }
-        processing_container.html((selected_ans + 1) + '/' + total_ans);
+        show_answer(answers[selected_answer]);
+        processing_container.html((selected_answer + 1) + '/' + answers.length);
         processing_container.show();
     });
 });
