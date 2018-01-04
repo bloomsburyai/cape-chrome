@@ -10,11 +10,12 @@ $(function () {
     var text;
     var timer = 0;
     var tab_id = 0;
+    var tts = false;
 
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
-    recognition.onstart = function() { $("#speech").removeClass("fa-microphone").addClass("fa-microphone-slash"); }
+    recognition.onstart = function() { $("#speech-input").removeClass("fa-microphone").addClass("fa-microphone-slash"); }
     recognition.onresult = function(ev) {
         var final_transcript;
         var interim_transcript;
@@ -40,7 +41,7 @@ $(function () {
         }
     }
     recognition.onend = function() {
-        $("#speech").removeClass("fa-microphone-slash").addClass("fa-microphone");
+        $("#speech-input").removeClass("fa-microphone-slash").addClass("fa-microphone");
         ask_question($(".question-text"))
     }
 
@@ -50,6 +51,9 @@ $(function () {
     });
 
     function process_content(content) {
+        if (typeof(content) === 'undefined') {
+            return;
+        }
         text = content.substr(0, 6789);
     }
         
@@ -94,7 +98,9 @@ $(function () {
 
     function show_answer(answer) {
         answer = answers[selected_answer]['answerText'];
-        chrome.tts.speak(answer);
+        if (tts) {
+            chrome.tts.speak(answer);
+        }
         answer = answer.replace("\n", " ").replace("  ", " ");
         chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'text': answer}, function() {});
     }
@@ -134,8 +140,33 @@ $(function () {
         window.close();
     });
 
-    $(".btn-speech").click(function() {
+    $(".btn-speech-input").click(function() {
         recognition.start();
     });
+
+    $(".btn-speech-output").click(function() {
+        tts = !tts;
+        chrome.storage.sync.set({
+	        speechOutput: tts
+	    }, function() {
+            if (tts) {
+                $("#speech-output").removeClass("fa-volume-off").addClass("fa-volume-up");
+            } else {
+                $("#speech-output").removeClass("fa-volume-up").addClass("fa-volume-off");
+            }
+	    });
+    });
+
+    chrome.storage.sync.get({
+	        speechOutput: false
+	    }, function(items) {
+            if (items.speechOutput) {
+                tts = items.speechOutput;
+                $("#speech-output").removeClass("fa-volume-off").addClass("fa-volume-up");
+            } else {
+                $("#speech-output").removeClass("fa-volume-up").addClass("fa-volume-off");
+            }
+	    }
+    );
 
 });

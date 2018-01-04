@@ -1,5 +1,5 @@
 body {
-    min-width: 320px;
+    min-width: 400px;
     background: #f1f1f1;
     min-height: 33px;
 }
@@ -73,7 +73,7 @@ body {
 
 #container-ctrlf {
     position: fixed;
-    width: 320px;
+    width: 400px;
     top: 0;
     right: 0;
     z-index: 99999999;
@@ -87,6 +87,7 @@ body {
     border-bottom-right-radius: 0;
     padding: 4px;
     padding-right: 32px;
+    margin-right: 8px;
 }
 
 #container-ctrlf input.question-text:focus {
