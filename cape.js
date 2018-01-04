@@ -104,4 +104,10 @@ $(function () {
         processing_container.html((selected_answer + 1) + '/' + answers.length);
         processing_container.show();
     });
+
+    $(".btn-close").click(function() {
+        chrome.tabs.sendMessage(tab_id, {'command': 'clear'}, function() {});
+        window.close();
+    });
+
 });

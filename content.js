@@ -21,5 +21,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
                 });
 		    }
 		});
+    } else if (msg['command'] == 'clear') {
+        capeMark.unmark();
     }
 });
