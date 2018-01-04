@@ -11,12 +11,38 @@ $(function () {
     var timer = 0;
     var tab_id = 0;
 
-	var recognition = new webkitSpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-	recognition.onstart = function() { console.log("started recognition"); }
-    recognition.onresult = function(event) { console.log(event) }
-    recognition.start();
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.onstart = function() { $("#speech").removeClass("fa-microphone").addClass("fa-microphone-slash"); }
+    recognition.onresult = function(ev) {
+        var final_transcript;
+        var interim_transcript;
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+               final_transcript += event.results[i][0].transcript;
+            } else {
+               interim_transcript += event.results[i][0].transcript;
+            }
+        }
+        console.log(interim_transcript);
+        console.log(final_transcript);
+        $(".question-text").val(final_transcript);
+    }
+    recognition.onerror = function(error) {
+        if (error.error == "not-allowed") {
+            // We can't ask for permission within the popup, but we can open
+            // a page in another tab which can request permission for the
+            // whole extension.
+            chrome.tabs.create({
+                url: chrome.runtime.getURL("speech-permissions.html")
+            });
+        }
+    }
+    recognition.onend = function() {
+        $("#speech").removeClass("fa-microphone-slash").addClass("fa-microphone");
+        ask_question($(".question-text"))
+    }
 
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         tab_id = tabs[0].id;
@@ -29,8 +55,12 @@ $(function () {
         
     function ask_question(question_input) {
         text_question = question_input.val();
+        if (text_question.length == 0) {
+            return;
+        }
         processing_container.html(default_loading_response);
         processing_container.show();
+
         // Only submit question if the user hasn't been typing for half a second
         if (timer != 0) {
             clearTimeout(timer);
@@ -102,6 +132,10 @@ $(function () {
     $(".btn-close").click(function() {
         chrome.tabs.sendMessage(tab_id, {'command': 'clear'}, function() {});
         window.close();
+    });
+
+    $(".btn-speech").click(function() {
+        recognition.start();
     });
 
 });
