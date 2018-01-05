@@ -19,9 +19,12 @@ chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
                     separateWordSearch: false,
                     acrossElements: true,
                     iframes: true,
+                    element: 'capemark',
                     done: function() {
-                        var element = document.querySelector("mark");
+                        var element = document.querySelector("capemark");
                         if (element !== null) {
+                            element.style.background = 'yellow';
+                            element.style.color = 'black';
                             element.scrollIntoView();
                             window.scrollTo(window.scrollX, window.scrollY - capeTopOffset);
                         }
