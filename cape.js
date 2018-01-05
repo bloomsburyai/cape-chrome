@@ -97,12 +97,10 @@ $(function () {
     }
 
     function show_answer(answer) {
-        answer = answers[selected_answer]['answerText'];
         if (tts) {
-            chrome.tts.speak(answer);
+            chrome.tts.speak(answers[selected_answer]['answerText']);
         }
-        answer = answer.replace("\n", " ").replace("  ", " ");
-        chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'text': answer}, function() {});
+        chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'response': answers[selected_answer]}, function() {});
     }
 
     $(".question-text").keyup(function() {
