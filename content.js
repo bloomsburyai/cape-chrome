@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
                 capeMark.mark(text, {
                     separateWordSearch: false,
                     acrossElements: true,
+                    iframes: true,
                     done: function() {
                         var element = document.querySelector("mark");
                         if (element !== null) {
