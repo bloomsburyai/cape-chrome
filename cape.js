@@ -60,14 +60,16 @@ $(function () {
         if (text_question.length == 0) {
             return;
         }
-        processing_container.html(default_loading_response);
-        processing_container.show();
 
         // Only submit question if the user hasn't been typing for half a second
         if (timer != 0) {
             clearTimeout(timer);
         }
+
         timer = setTimeout(function() {
+            processing_container.html(default_loading_response);
+            processing_container.show();
+
             $.post('https://responder.thecape.ai/api/0.1/answer?token=hj1-BZfR7IICCXtVHZXeEeiZdfXkVeDjnZnzZ3HcR_o',
                 {
                     'text': text,
