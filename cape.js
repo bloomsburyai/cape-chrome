@@ -52,7 +52,7 @@ $(function () {
         if (typeof(content) === 'undefined') {
             return;
         }
-        text = content.substr(0, 6789);
+        text = content.substr(0, 150000);
     }
         
     function ask_question(question_input) {
