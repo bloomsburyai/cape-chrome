@@ -39,6 +39,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
         text = msg['response']['answerText'].replace("\n", " ");
         context = msg['response']['answerContext'].replace("\n", " ");
         capeMark.unmark({
+			element: 'capemark',
             done: function(){
                 capeMark.mark(text, {
                     separateWordSearch: false,
@@ -72,6 +73,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender, callback) {
             }
         });
     } else if (msg['command'] == 'clear') {
-        capeMark.unmark();
+        capeMark.unmark({
+			element: 'capemark'
+		});
     }
 });
