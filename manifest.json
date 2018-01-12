@@ -17,6 +17,14 @@
         "js": ["mark.js", "content.js"]
     }],
 
+    "commands": {
+		"_execute_browser_action": {
+            "suggested_key": {
+                "default": "Alt+F"
+            }
+        }
+	},
+
     "permissions": [
         "activeTab",
         "tts",
