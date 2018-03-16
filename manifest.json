@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "Cape - Super Powered Ctrl-F",
-    "description": "The Cape extension lets you use Bloomsbury AI's machine reading technology to ask natural language questions of the current web page.",
+    "description": "Ask a question and Cape will find it in the current page.",
     "version": "0.1",
 
     "browser_action": {
