@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "Cape - Super Powered Ctrl-F",
-    "description": "Ask a question and Cape will find it in the current page.",
+    "description": "Ask a question and Cape will find the answer in the current page.",
     "version": "0.1",
 
     "browser_action": {
