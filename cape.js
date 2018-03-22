@@ -73,6 +73,14 @@ $(function () {
         chrome.tabs.sendMessage(tab_id, {'command': 'convert'}, process_content);
     });
 
+    chrome.commands.onCommand.addListener(function(command) { 
+        if (command == 'voice') {
+            recognition.start();
+        } else if (command == 'speech') {
+            toggleTTS();
+        }
+    });
+
     function process_content(content) {
         if (typeof(content) === 'undefined') {
             chrome.tabs.sendMessage(tab_id, {'command': 'convert'}, process_content);
@@ -172,7 +180,10 @@ $(function () {
         recognition.start();
     });
 
-    $(".btn-speech-output").click(function() {
+
+    $(".btn-speech-output").click(toggleTTS());
+
+    function toggleTTS() {
         tts = !tts;
         chrome.storage.sync.set({
 	        speechOutput: tts
@@ -183,7 +194,7 @@ $(function () {
                 $("#speech-output").removeClass("fa-volume-up").addClass("fa-volume-off");
             }
 	    });
-    });
+    }
 
     chrome.storage.sync.get({
 	        speechOutput: false

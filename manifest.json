@@ -22,6 +22,18 @@
             "suggested_key": {
                 "default": "Alt+F"
             }
+        },
+        "voice": {
+            "suggested_key": {
+                "default": "Alt+V"
+            },
+            "description": "Ask a question using voice recognition"
+        },
+        "speech": {
+            "suggested_key": {
+                "default": "Alt+S"
+            },
+            "description": "Toggle speech output on or off"
         }
 	},
 
