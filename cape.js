@@ -35,6 +35,8 @@ $(function () {
     var tab_id = 0;
     var tts = false;
 
+    var message_timer = setTimeout(function() { $("#message").show(0); }, 100);
+
     var recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
@@ -73,9 +75,12 @@ $(function () {
 
     function process_content(content) {
         if (typeof(content) === 'undefined') {
+            chrome.tabs.sendMessage(tab_id, {'command': 'convert'}, process_content);
             return;
         }
         text = content.substr(0, 150000);
+        clearTimeout(message_timer);
+        $("#message").hide();
     }
         
     function ask_question(question_input) {
