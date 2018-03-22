@@ -150,3 +150,14 @@ body {
     top: -2px;
     display: none;
 }
+
+hr {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+#answer {
+    font-size: 12px;
+    height: 90px;
+    overflow-y: auto;
+}

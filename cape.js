@@ -128,6 +128,8 @@ $(function () {
         if (tts) {
             chrome.tts.speak(answers[selected_answer]['answerText']);
         }
+        $("body").css('min-height', '133px');
+        $("#answer").html(answers[selected_answer]['answerContext'].replace(answers[selected_answer]['answerText'], "<b>" + answers[selected_answer]['answerText'] + "</b>"));
         chrome.tabs.sendMessage(tab_id, {'command': 'highlight', 'response': answers[selected_answer]}, function() {});
     }
 
