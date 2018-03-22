@@ -89,7 +89,7 @@ $(function () {
             return;
         }
 
-        // Only submit question if the user hasn't been typing for half a second
+        // Only submit question if the user hasn't been typing for 750ms
         if (timer != 0) {
             clearTimeout(timer);
         }
@@ -121,7 +121,7 @@ $(function () {
                         button_select.addClass('btn-select-disabled');
                     }
                 })
-        }, 500);
+        }, 750);
     }
 
     function show_answer(answer) {
